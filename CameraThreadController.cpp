@@ -166,17 +166,23 @@ cv::Mat CameraThread::ellipse_detect(const cv::Mat& src)
     erode(gray_image, gray_image, cv::Mat());
     dilate(gray_image, gray_image, cv::Mat());
 
+    cv::Mat kernel = cv::getStructuringElement(cv::MORPH_RECT, cv::Size(3, 3));
+
     cv::Mat fg;
-    cv::erode(gray_image, fg, cv::Mat(), cv::Point(), 6);	// 六次递归腐蚀
+    cv::morphologyEx(gray_image, fg, cv::MORPH_OPEN, kernel, cv::Point(), 1);
+    cv::erode(gray_image, fg, kernel, cv::Point(), 5);
 
-    // 识别没有对象的图像像素
     cv::Mat bg;
-    cv::dilate(gray_image, bg, cv::Mat(), cv::Point(), 6);	// 六次递归膨胀
-    cv::threshold(bg, bg, 1, 128, cv::THRESH_BINARY_INV);	// 二进制阈值函数图像分割cv::THRESH_BINARY_INV 超过阈值 则 值变为 0,其他为 128 黑白二值反转(反转二值阈值化)
+    cv::morphologyEx(gray_image, bg, cv::MORPH_CLOSE, kernel, cv::Point(), 1);
+    //cv::dilate(gray_image, bg, cv::Mat(), cv::Point(), 5);
 
-    // 显示标记图像
+    // 超过阈值 则 值变为 0,其他为 128 黑白二值反转(反转二值阈值化)
+    cv::threshold(bg, bg, 1, 128, cv::THRESH_BINARY_INV);
+
     cv::Mat markers(gray_image.size(), CV_8U, cv::Scalar(0));
     markers = fg + bg;
+
+    //return markers;
 
     // 分水岭算法
     markers.convertTo(markers, CV_32S);
@@ -212,7 +218,7 @@ cv::Mat CameraThread::ellipse_detect(const cv::Mat& src)
 
     for (int i = 0; i < label; i++)
     {
-        if ((fuseratio[i] < 0.50))
+        if ((fuseratio[i] < 0.5))
         {
             cv::rectangle(img, cv::Rect(xmin[i], ymin[i], xmax[i] - xmin[i], ymax[i] - ymin[i])
                 , cv::Scalar(0, 255, 0), 2, 8);
@@ -260,17 +266,23 @@ cv::Mat CameraThread::HCbCr_detect(const cv::Mat& src)
     erode(gray_image, gray_image, cv::Mat());
     dilate(gray_image, gray_image, cv::Mat());
 
+    cv::Mat kernel = cv::getStructuringElement(cv::MORPH_RECT, cv::Size(3, 3));
+
     cv::Mat fg;
-    cv::erode(gray_image, fg, cv::Mat(), cv::Point(), 6);	// 六次递归腐蚀
+    cv::morphologyEx(gray_image, fg, cv::MORPH_OPEN, kernel, cv::Point(), 1);
+    cv::erode(gray_image, fg, kernel, cv::Point(), 5);
 
-    // 识别没有对象的图像像素
     cv::Mat bg;
-    cv::dilate(gray_image, bg, cv::Mat(), cv::Point(), 6);	// 六次递归膨胀
-    cv::threshold(bg, bg, 1, 128, cv::THRESH_BINARY_INV);	// 二进制阈值函数图像分割cv::THRESH_BINARY_INV 超过阈值 则 值变为 0,其他为 128 黑白二值反转(反转二值阈值化)
+    cv::morphologyEx(gray_image, bg, cv::MORPH_CLOSE, kernel, cv::Point(), 1);
+    //cv::dilate(gray_image, bg, cv::Mat(), cv::Point(), 5);
 
-    // 显示标记图像
+    // 超过阈值 则 值变为 0,其他为 128 黑白二值反转(反转二值阈值化)
+    cv::threshold(bg, bg, 1, 128, cv::THRESH_BINARY_INV);
+
     cv::Mat markers(gray_image.size(), CV_8U, cv::Scalar(0));
     markers = fg + bg;
+
+    //return markers;
 
     // 分水岭算法
     markers.convertTo(markers, CV_32S);
@@ -306,7 +318,7 @@ cv::Mat CameraThread::HCbCr_detect(const cv::Mat& src)
 
     for (int i = 0; i < label; i++)
     {
-        if ((fuseratio[i] < 0.65))
+        if ((fuseratio[i] < 0.5))
         {
             cv::rectangle(img, cv::Rect(xmin[i], ymin[i], xmax[i] - xmin[i], ymax[i] - ymin[i])
                 , cv::Scalar(0, 255, 0), 2, 8);
@@ -343,17 +355,23 @@ cv::Mat CameraThread::HSV_detector(const cv::Mat& src)
     erode(gray_image, gray_image, cv::Mat());
     dilate(gray_image, gray_image, cv::Mat());
 
+    cv::Mat kernel = cv::getStructuringElement(cv::MORPH_RECT, cv::Size(3, 3));
+
     cv::Mat fg;
-    cv::erode(gray_image, fg, cv::Mat(), cv::Point(), 6);	// 六次递归腐蚀
+    cv::morphologyEx(gray_image, fg, cv::MORPH_OPEN, kernel, cv::Point(), 1);
+    cv::erode(gray_image, fg, kernel, cv::Point(), 5);
 
-    // 识别没有对象的图像像素
     cv::Mat bg;
-    cv::dilate(gray_image, bg, cv::Mat(), cv::Point(), 6);	// 六次递归膨胀
-    cv::threshold(bg, bg, 1, 128, cv::THRESH_BINARY_INV);	// 二进制阈值函数图像分割cv::THRESH_BINARY_INV 超过阈值 则 值变为 0,其他为 128 黑白二值反转(反转二值阈值化)
+    cv::morphologyEx(gray_image, bg, cv::MORPH_CLOSE, kernel, cv::Point(), 1);
+    //cv::dilate(gray_image, bg, cv::Mat(), cv::Point(), 5);
 
-    // 显示标记图像
+    // 超过阈值 则 值变为 0,其他为 128 黑白二值反转(反转二值阈值化)
+    cv::threshold(bg, bg, 1, 128, cv::THRESH_BINARY_INV);
+
     cv::Mat markers(gray_image.size(), CV_8U, cv::Scalar(0));
     markers = fg + bg;
+
+    //return markers;
 
     // 分水岭算法
     markers.convertTo(markers, CV_32S);
@@ -389,7 +407,7 @@ cv::Mat CameraThread::HSV_detector(const cv::Mat& src)
 
     for (int i = 0; i < label; i++)
     {
-        if ((fuseratio[i] < 0.65))
+        if ((fuseratio[i] < 0.5))
         {
             cv::rectangle(img, cv::Rect(xmin[i], ymin[i], xmax[i] - xmin[i], ymax[i] - ymin[i])
                 , cv::Scalar(0, 255, 0), 2, 8);
