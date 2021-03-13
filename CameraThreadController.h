@@ -75,7 +75,7 @@ public:
 private:
     bool    isStop;
     bool    isRecording;
-    int     timerDelay  = 40;
+    int     timerDelay  = 50;
     double  fps         = 1000.0/timerDelay;
     const int maxWidth  = 640;
     const int maxHeight = 480;

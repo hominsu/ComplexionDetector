@@ -173,7 +173,7 @@ cv::Mat CameraThread::ellipse_detect(const cv::Mat& src)
     cv::erode(gray_image, fg, kernel, cv::Point(), 5);
 
     cv::Mat bg;
-    cv::morphologyEx(gray_image, bg, cv::MORPH_CLOSE, kernel, cv::Point(), 1);
+    cv::morphologyEx(gray_image, bg, cv::MORPH_CLOSE, kernel, cv::Point(), 2);
     //cv::dilate(gray_image, bg, cv::Mat(), cv::Point(), 5);
 
     // 超过阈值 则 值变为 0,其他为 128 黑白二值反转(反转二值阈值化)
@@ -182,7 +182,7 @@ cv::Mat CameraThread::ellipse_detect(const cv::Mat& src)
     cv::Mat markers(gray_image.size(), CV_8U, cv::Scalar(0));
     markers = fg + bg;
 
-    cv::resize(markers, markers, cv::Size(), 0.5, 0.5, cv::INTER_NEAREST);
+    //cv::resize(markers, markers, cv::Size(), 0.5, 0.5, cv::INTER_NEAREST);
     //return markers;
 
     // 分水岭算法
