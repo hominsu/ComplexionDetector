@@ -182,6 +182,7 @@ cv::Mat CameraThread::ellipse_detect(const cv::Mat& src)
     cv::Mat markers(gray_image.size(), CV_8U, cv::Scalar(0));
     markers = fg + bg;
 
+    cv::resize(markers, markers, cv::Size(), 0.5, 0.5, cv::INTER_NEAREST);
     //return markers;
 
     // 分水岭算法
