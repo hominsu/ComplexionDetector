@@ -1,6 +1,13 @@
 #pragma once
 
 #include <QtWidgets/QMainWindow>
+#include <QDir>
+#include <QAction>
+#include <QDateTime>
+#include <QToolButton>
+#include <QPushButton>
+#include <QMessageBox>
+#include <QFileDialog>
 #include "ui_mainwindow.h"
 #include "CameraThreadController.h"
 #include "FileThreadController.h"

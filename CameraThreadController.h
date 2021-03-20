@@ -4,27 +4,17 @@
 #define CAMERATHREADCONTROLLER_H
 
 #include <QDebug>
-#include <algorithm>
 #include <QObject>
 #include <QThread>
 #include <QTimer>
-#include <QDateTime>
-#include <QDir>
-#include <QFileDialog>
-#include <vector>
 #include <QImage>
 #include <QPixmap>
 #include <QString>
 #include <QStringList>
-#include <QAction>
-#include <QToolButton>
-#include <QPushButton>
-#include <QMessageBox>
 #include <opencv2/opencv.hpp>
 #include <opencv2/core/core.hpp>
 #include <opencv2/imgcodecs.hpp>
 #include <imgproc/imgproc.hpp>
-#include <stack>
 
 
 class CameraThreadController: public QObject   //controller用于启动线程和处理线程执行结果
