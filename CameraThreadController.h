@@ -58,14 +58,11 @@ class CameraThread: public QObject
     Q_OBJECT
 public:
     ~CameraThread();
-    void setFlag(bool flag = true);
 
 private:
     void readframe();
     cv::Mat frameResize(const cv::Mat srcFrame);
     QImage MatImageToQt(const cv::Mat &src);
-    cv::Mat ellipse_detect(const cv::Mat& src);
-    void Seed_Filling(const cv::Mat& binImg, cv::Mat& labelImg, int& labelNum, int(&ymin)[20], int(&ymax)[20], int(&xmin)[20], int(&xmax)[20]);
 
 public:
     QImage image;
