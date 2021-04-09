@@ -207,9 +207,13 @@ void MainWindow::onPBtnFileStartSlot()
 {
     // 新建一个文件读取线程
     fileThread = new FileThreadController(this);
+
+    //detectedStart();
+
     // 连接GUI和线程的信号和槽
     connect(this, &MainWindow::fileThreadStartSignal, fileThread, &FileThreadController::fileThreadStartSlot);
     connect(fileThread, &FileThreadController::sendImage, this, &MainWindow::readFrameSlot);
+    //connect(fileThread, &FileThreadController::sendImage, detected, &Detected::sendImageToThreadSlot);
     // 触发开始读取的信号
     emit fileThreadStartSignal(this->fileName);
     // 设置开始按钮和取消按钮
@@ -228,8 +232,11 @@ void MainWindow::onPBtnFileCancelSlot()
         // 关闭连接
         disconnect(this, &MainWindow::fileThreadStartSignal, fileThread, &FileThreadController::fileThreadStartSlot);
         disconnect(fileThread, &FileThreadController::sendImage, this, &MainWindow::readFrameSlot);
+        //disconnect(fileThread, &FileThreadController::sendImage, detected, &Detected::sendImageToThreadSlot);
         // 释放线程
         delete fileThread;
+
+        //detectedStop();
         // 清空lable
         ui->FileView->clear();
         // 设置开始按钮和取消按钮的状态
@@ -240,6 +247,23 @@ void MainWindow::onPBtnFileCancelSlot()
         ui->tBtnOpenFile->setEnabled(true);
     }
 }
+
+/*
+void MainWindow::detectedStart()
+{
+    detected = new Detected(this);
+    connect(this, &MainWindow::sendImageDetected, detected, &Detected::sendImageToThreadSlot);
+    connect(detected, &Detected::recvImageSlot, this, &MainWindow::readFrameSlot);
+}
+
+void MainWindow::detectedStop()
+{
+    disconnect(this, &MainWindow::sendImageDetected, detected, &Detected::sendImageToThreadSlot);
+    disconnect(detected, &Detected::recvImageSlot, this, &MainWindow::readFrameSlot);
+
+    delete detected;
+}
+*/
 
 void MainWindow::readFrameSlot(const QImage frame)
 {

@@ -43,6 +43,20 @@ void FileThread::fileRead(const QString fileName)
     size_t lastExt = name.find_last_of(".");
     std::string ext = name.substr(lastExt + 1);
 
+    
+    // 初始化模型
+    detected.initalDetected();
+    if (detected.getisGpu())
+    {
+        std::cout << "Using GPU" << std::endl;
+    }
+    else
+    {
+        std::cout << "Using CPU" << std::endl;
+    }
+    detected.loadingModule();
+    
+
     // 检测扩展名，分别处理图片和视频
     if(ext == "jpg" || ext == "jpeg")
     {
@@ -79,7 +93,9 @@ void FileThread::startImageRead(const std::string fileName)
 {
     srcImage = cv::imread(fileName);
     // 检测分辨率，违规就resize
-    dstImage = MatImageToQt(frameResize(srcImage));
+    srcImage = frameResize(srcImage);
+    srcImage = detected.forward(srcImage);
+    dstImage = MatImageToQt(srcImage);
     emit sendFileFrame(dstImage);
 }
 
@@ -98,7 +114,9 @@ void FileThread::startVideoRead(const std::string fileName)
     {
         cap.read(srcFrame);
         // 检测分辨率，违规就resize
-        dstFrame = MatImageToQt(frameResize(srcFrame));
+        srcFrame = frameResize(srcFrame);
+        srcFrame = detected.forward(srcFrame);
+        dstFrame = MatImageToQt(srcFrame);
         emit sendFileFrame(dstFrame);
         currentFrame = cap.get(cv::CAP_PROP_POS_FRAMES);
         cv::waitKey(static_cast<int>(1000/fps));

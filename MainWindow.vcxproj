@@ -25,6 +25,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <PlatformToolset>v142</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
   <ImportGroup Condition="Exists('$(QtMsBuild)\qt_defaults.props')">
@@ -57,13 +58,19 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
-    <IncludePath>D:\Library\cvStatic\include;D:\Library\cvStatic\include\opencv2;$(IncludePath)</IncludePath>
-    <LibraryPath>D:\Library\cvStatic\x64\vc16\staticlib;$(LibraryPath)</LibraryPath>
+    <IncludePath>D:\Library\libtorch-win-shared-with-deps-1.8.1+cu111\libtorch\include\torch\csrc\api\include;D:\Library\libtorch-win-shared-with-deps-1.8.1+cu111\libtorch\include;D:\Library\cvStatic\include;D:\Library\cvStatic\include\opencv2;$(IncludePath)</IncludePath>
+    <LibraryPath>D:\Library\libtorch-win-shared-with-deps-1.8.1+cu111\libtorch\lib;D:\Library\cvStatic\x64\vc16\staticlib;$(LibraryPath)</LibraryPath>
+    <OutDir>$(SolutionDir)bin\$(Platform)\$(Configuration)\</OutDir>
+    <IntDir>MainWindow.dir\$(Platform)\$(Configuration)\</IntDir>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <Link>
-      <AdditionalDependencies>ade.lib;IlmImf.lib;ippicvmt.lib;ippiw.lib;ittnotify.lib;libjpeg-turbo.lib;libopenjp2.lib;libpng.lib;libprotobuf.lib;libtiff.lib;libwebp.lib;opencv_calib3d451.lib;opencv_core451.lib;opencv_dnn451.lib;opencv_features2d451.lib;opencv_flann451.lib;opencv_gapi451.lib;opencv_highgui451.lib;opencv_imgcodecs451.lib;opencv_imgproc451.lib;opencv_ml451.lib;opencv_objdetect451.lib;opencv_photo451.lib;opencv_stitching451.lib;opencv_video451.lib;opencv_videoio451.lib;quirc.lib;zlib.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>asmjit.lib;c10.lib;c10d.lib;c10_cuda.lib;caffe2_detectron_ops_gpu.lib;caffe2_module_test_dynamic.lib;caffe2_nvrtc.lib;clog.lib;cpuinfo.lib;dnnl.lib;fbgemm.lib;fbjni.lib;gloo.lib;gloo_cuda.lib;libprotobuf-lite.lib;libprotobuf.lib;libprotoc.lib;mkldnn.lib;pthreadpool.lib;pytorch_jni.lib;torch.lib;torch_cpu.lib;torch_cuda.lib;torch_cuda_cpp.lib;torch_cuda_cu.lib;XNNPACK.lib;ade.lib;IlmImf.lib;ippicvmt.lib;ippiw.lib;ittnotify.lib;libjpeg-turbo.lib;libopenjp2.lib;libpng.lib;libtiff.lib;libwebp.lib;opencv_calib3d451.lib;opencv_core451.lib;opencv_dnn451.lib;opencv_features2d451.lib;opencv_flann451.lib;opencv_gapi451.lib;opencv_highgui451.lib;opencv_imgcodecs451.lib;opencv_imgproc451.lib;opencv_ml451.lib;opencv_objdetect451.lib;opencv_photo451.lib;opencv_stitching451.lib;opencv_video451.lib;opencv_videoio451.lib;quirc.lib;zlib.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;comdlg32.lib;advapi32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
+    <ClCompile>
+      <ConformanceMode>false</ConformanceMode>
+      <AdditionalOptions>/INCLUDE:?warp_size@cuda@at@@YAHXZ %(AdditionalOptions)</AdditionalOptions>
+    </ClCompile>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'" Label="Configuration">
     <ClCompile>
@@ -96,6 +103,7 @@
     <QtUic Include="mainwindow.ui" />
     <QtMoc Include="mainwindow.h" />
     <ClCompile Include="CameraThreadController.cpp" />
+    <ClCompile Include="detected.cpp" />
     <ClCompile Include="FileThreadController.cpp" />
     <ClCompile Include="mainwindow.cpp" />
     <ClCompile Include="main.cpp" />
@@ -105,6 +113,12 @@
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="FileThreadController.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ClassDiagram.cd" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="detected.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Condition="Exists('$(QtMsBuild)\qt.targets')">

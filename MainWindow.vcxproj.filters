@@ -46,6 +46,9 @@
     <ClCompile Include="FileThreadController.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="detected.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="CameraThreadController.h">
@@ -54,5 +57,13 @@
     <QtMoc Include="FileThreadController.h">
       <Filter>Header Files</Filter>
     </QtMoc>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ClassDiagram.cd" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="detected.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

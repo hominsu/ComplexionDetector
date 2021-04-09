@@ -14,6 +14,7 @@
 #include <opencv2/core/core.hpp>
 #include <opencv2/imgcodecs.hpp>
 #include <imgproc/imgproc.hpp>
+#include "detected.h"
 
 
 class FileThreadController: public QObject
@@ -61,6 +62,8 @@ private:
     QImage      dstFrame;
     cv::Mat     tmpFrame;
     cv::Mat     midFrame;
+
+    Detected    detected;
 
 signals:
     void sendFileFrame(const QImage Frame);

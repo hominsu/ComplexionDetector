@@ -11,6 +11,7 @@
 #include "ui_mainwindow.h"
 #include "CameraThreadController.h"
 #include "FileThreadController.h"
+//#include "Detected.h"
 
 class MainWindow : public QMainWindow
 {
@@ -23,11 +24,14 @@ public:
 private:
     void createConnect();
     void selectFile();
+    //void detectedStart();
+    //void detectedStop();
 
 private:
     Ui::MainWindow* ui;
     CameraThreadController* cameraThread;
     FileThreadController* fileThread;
+    //Detected* detected;
     QString     fileName;
     QString     vedioName;
     QImage      cameraImage;
@@ -36,6 +40,7 @@ private:
     bool        isRecording = false;
 
 signals:
+    void sendImageDetected(const QImage qimage);
     void vedioRecording(const QString fileName, const bool isRecording);
     void fileThreadStartSignal(const QString fileName);
 

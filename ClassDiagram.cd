@@ -1,0 +1,53 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1" GroupingSetting="Access" MembersFormat="FullSignature">
+  <Class Name="MainWindow" Collapsed="true">
+    <Position X="0.5" Y="5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AABBACAAAAACEAJIAAAhAAgICAAQAAABAGQAAAIQAAA=</HashCode>
+      <FileName>mainwindow.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CameraThreadController" Collapsed="true">
+    <Position X="5.25" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AABAAAAAAAAEEAEAAAAAAAAAAAIAAAAAAAEIAAIAAAg=</HashCode>
+      <FileName>CameraThreadController.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CameraThread" Collapsed="true">
+    <Position X="0.75" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ACQQBUCAAAAgDKAAAAAAAAwKEAogAAAAABAAEAAAAAA=</HashCode>
+      <FileName>CameraThreadController.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FileThreadController" Collapsed="true">
+    <Position X="3" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAACAQAAAAAAAAAAAAAAAIAAAAAAAAAAAIAAAA=</HashCode>
+      <FileName>FileThreadController.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FileThread" Collapsed="true">
+    <Position X="7.5" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ACAQBEAAAAAgjAAAAAAAAAACAAIgAAAgAABAEAAAAAA=</HashCode>
+      <FileName>FileThreadController.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="QObject" Collapsed="true">
+    <Position X="4" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>CCgAAAAQQIAAAAVUgQAAEMCGAAMQiIIHBEAiIhJGACU=</HashCode>
+      <FileName>C:\Qt\Qt5.13.2\5.13.2\msvc2017_64\include\QtCore\qobject.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="QMainWindow" Collapsed="true">
+    <Position X="0.5" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AoACQgKYCA0hRAgRkKBY4oAAABEAABuBggAgIAMgACA=</HashCode>
+      <FileName>C:\Qt\Qt5.13.2\5.13.2\msvc2017_64\include\QtWidgets\qmainwindow.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Font Name="Microsoft YaHei UI" Size="9" />
+</ClassDiagram>
