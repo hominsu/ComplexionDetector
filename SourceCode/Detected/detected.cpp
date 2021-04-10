@@ -162,6 +162,8 @@ cv::Mat Detected::forward(const cv::Mat &src)
 
         cv::rectangle(frame, cv::Rect(left, top, (right - left), (bottom - top)), cv::Scalar(0, 255, 0), 2);
 
+        classId = classID;
+
         cv::putText(frame,
             classnames[classID] + ": " + cv::format("%.2f", score),
             cv::Point(left, top),

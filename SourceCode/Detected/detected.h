@@ -30,6 +30,7 @@ public:
 
 private:
 	bool isGpu;
+	int classId;
 	double usagetime;
 	torch::DeviceType device_type;
 	torch::jit::script::Module module;

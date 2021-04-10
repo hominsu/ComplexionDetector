@@ -26,6 +26,7 @@
     <ConfigurationType>Application</ConfigurationType>
     <PlatformToolset>v142</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
+    <UseOfMfc>false</UseOfMfc>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
   <ImportGroup Condition="Exists('$(QtMsBuild)\qt_defaults.props')">
@@ -99,26 +100,35 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <QtRcc Include="mainwindow.qrc" />
-    <QtUic Include="mainwindow.ui" />
-    <QtMoc Include="mainwindow.h" />
-    <ClCompile Include="CameraThreadController.cpp" />
-    <ClCompile Include="detected.cpp" />
-    <ClCompile Include="FileThreadController.cpp" />
-    <ClCompile Include="mainwindow.cpp" />
-    <ClCompile Include="main.cpp" />
+    <ClCompile Include="SourceCode\Detected\detected.cpp" />
+    <ClCompile Include="SourceCode\PPTControl\CarryMove.cpp" />
+    <ClCompile Include="SourceCode\PPTControl\keyboard.cpp" />
+    <ClCompile Include="SourceCode\PPTControl\mouse.cpp" />
+    <ClCompile Include="SourceCode\PPTControl\pptControl.cpp" />
+    <QtRcc Include="SourceCode\mainwindow.qrc" />
+    <QtUic Include="SourceCode\mainwindow.ui" />
+    <QtMoc Include="SourceCode\mainwindow.h" />
+    <ClCompile Include="SourceCode\CameraThreadController.cpp" />
+    <ClCompile Include="SourceCode\FileThreadController.cpp" />
+    <ClCompile Include="SourceCode\mainwindow.cpp" />
+    <ClCompile Include="SourceCode\main.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <QtMoc Include="CameraThreadController.h" />
+    <QtMoc Include="SourceCode\CameraThreadController.h" />
   </ItemGroup>
   <ItemGroup>
-    <QtMoc Include="FileThreadController.h" />
+    <QtMoc Include="SourceCode\FileThreadController.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="ClassDiagram.cd" />
+    <None Include="module\action.names" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="detected.h" />
+    <ClInclude Include="SourceCode\Detected\detected.h" />
+    <ClInclude Include="SourceCode\PPTControl\CarryMove.h" />
+    <ClInclude Include="SourceCode\PPTControl\keyboard.h" />
+    <ClInclude Include="SourceCode\PPTControl\mouse.h" />
+    <ClInclude Include="SourceCode\PPTControl\pptControl.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Condition="Exists('$(QtMsBuild)\qt.targets')">
