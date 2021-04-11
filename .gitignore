@@ -2,3 +2,6 @@ x64/Debug/
 x64/Release/
 backup/
 .vs/
+/bin/x64/Release
+/model
+/MainWindow.dir/x64/Release

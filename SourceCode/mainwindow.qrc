@@ -1,0 +1,9 @@
+<RCC>
+    <qresource prefix="/action">
+        <file>action/dianji.png</file>
+        <file>action/pingyi.png</file>
+        <file>action/suofang.png</file>
+        <file>action/xuanzhuan.png</file>
+        <file>action/zhuaqu.png</file>
+    </qresource>
+</RCC>
