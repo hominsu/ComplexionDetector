@@ -5,21 +5,21 @@
 #include  "mouse.h"
 
 
-#define dian_ji 1
-#define ping_yi 2
-#define suo_fang 3
-#define zhua_qu 4
-#define xuan_zhuan 5
+#define DIANJI 1
+#define PINGYI 2
+#define SUOFANG 3
+#define ZHUAQU 4
+#define XUANZHUAN 5
 
 
 class CarryMove:public mouse
 {
 public:
 	CarryMove();
+	~CarryMove();
 	CarryMove(int signal);
 	void CarrySelect(int signal);//相当于操作的选择部分，用switch实现,在构造函数中被引用
 
-	~CarryMove();
 private:
 	void setNum(int num);//用于封装模拟键盘的操作，num就是对应键盘的一个数值，数值在windows官方文档里有
 	void setNum2(int num1, int num2);//用于组合键，目前还没用到组合键，暂时保留

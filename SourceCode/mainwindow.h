@@ -24,14 +24,13 @@ public:
 private:
     void createConnect();
     void selectFile();
-    //void detectedStart();
-    //void detectedStop();
+    void askPptControl();
+
 
 private:
     Ui::MainWindow* ui;
     CameraThreadController* cameraThread;
     FileThreadController* fileThread;
-    //Detected* detected;
     QString     fileName;
     QString     vedioName;
     QImage      cameraImage;
@@ -54,8 +53,8 @@ private slots:
     void onPBtnRecordingSlot();
     void onPBtnFileStartSlot();
     void onPBtnFileCancelSlot();
-    void readImageSlot(const QImage image);
-    void readFrameSlot(const QImage frame);
+    void readImageSlot(const QImage image, int action);
+    void readFrameSlot(const QImage frame, int action);
     void cameraStatusSlot(const bool isEnable);
     void noneCameraSlot();
 };

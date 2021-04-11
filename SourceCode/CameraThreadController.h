@@ -11,11 +11,13 @@
 #include <QPixmap>
 #include <QString>
 #include <QStringList>
+#include <QFileDialog>
 #include <opencv2/opencv.hpp>
 #include <opencv2/core/core.hpp>
 #include <opencv2/imgcodecs.hpp>
 #include <imgproc/imgproc.hpp>
 #include "Detected/detected.h"
+#include "PPTControl/PPtController.h"
 
 
 class CameraThreadController: public QObject   //controller用于启动线程和处理线程执行结果
@@ -31,13 +33,13 @@ public:
 signals:
     void cameraThreadStart();
     void statusCameraThreadCatchFrame(const QString fileName, const bool isRecoding);
-    void sendImage(const QImage qimage);
+    void sendImage(const QImage qimage, int action);
     void cameraEnableSignal(const bool isEnable);
     void noneCameraSignal();
     void stopReadFrameSignal();
 
 public slots:
-    void recvImageSlot(const QImage qImage);    //处理线程执行的结果
+    void recvImageSlot(const QImage qImage, int action);    //处理线程执行的结果
     void statusVedioRecordingSlot(const QString fileName, const bool isRecoding);
     void cameraStatusSlot(const bool isEnable);
     void recvNoneCameraSlot();
@@ -54,6 +56,7 @@ public:
 
 private:
     void readframe();
+    std::string selectFile();
     cv::Mat frameResize(const cv::Mat srcFrame);
     QImage MatImageToQt(const cv::Mat &src);
 
@@ -76,11 +79,14 @@ private:
     cv::VideoCapture    cap;
     cv::VideoWriter     vedio;
     std::string         vedioRecordingFileName;
+
     Detected detected;
+    PPtController* ppt = nullptr;
+    int action = -1;
 
 signals:
     void noneCamera();
-    void sendImage(const QImage image);
+    void sendImage(const QImage image, int action);
     void cameraEnable(const bool IsEnable);
 
 public slots:

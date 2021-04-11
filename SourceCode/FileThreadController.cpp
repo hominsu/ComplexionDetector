@@ -28,9 +28,9 @@ void FileThreadController::fileThreadStartSlot(const QString fileName)
     emit fileThreadStartSignal(fileName);
 }
 
-void FileThreadController::recvFrameSlot(const QImage qImage)
+void FileThreadController::recvFrameSlot(const QImage qImage, int action)
 {
-    emit sendImage(qImage);
+    emit sendImage(qImage, action);
 }
 
 void FileThreadController::stopReadFrameSlot()
@@ -39,6 +39,33 @@ void FileThreadController::stopReadFrameSlot()
 }
 
 
+std::string FileThread::selectFile()
+{
+    // 打开一个文件对话框
+    QFileDialog* fileDialog = new QFileDialog();
+    // 设置文件对话框的基本信息
+    // 设置文件对话框的标题
+    //fileDialog->setWindowTitle(QString::fromLocal8Bit("选择需要打开的PPT"));
+    fileDialog->setWindowTitle("选择需要打开的PPT");
+    // 设置打开的默认目录
+    fileDialog->setDirectory("");
+    // 设置过滤器
+    QStringList nameFilters;
+    nameFilters << QString::fromLocal8Bit("PPT (*.ppt *.pptx)");
+    fileDialog->setNameFilters(nameFilters);
+
+    QStringList _fileName;
+    if (fileDialog->exec())
+    {
+        _fileName = fileDialog->selectedFiles();
+    }
+
+    if (!_fileName.isEmpty())
+    {
+        return _fileName[0].toStdString();
+    }
+    return "";
+}
 
 void FileThread::fileRead(const QString fileName)
 {
@@ -49,7 +76,17 @@ void FileThread::fileRead(const QString fileName)
     size_t lastExt = name.find_last_of(".");
     std::string ext = name.substr(lastExt + 1);
 
-    
+    std::string var = selectFile();
+    if (!var.empty())
+    {
+        ppt = new PPtController(var);
+    }
+    else
+    {
+        ppt = nullptr;
+    }
+
+
     // 初始化模型
     detected.initalDetected();
     if (detected.getisGpu())
@@ -102,9 +139,19 @@ void FileThread::startImageRead(const std::string fileName)
     srcImage = cv::imread(fileName);
     // 检测分辨率，违规就resize
     srcImage = frameResize(srcImage);
+
+    // 将帧送入模型推导
     srcImage = detected.forward(srcImage);
+
+    // 将得到的分类送入ppt控制器
+    if (ppt != nullptr)
+    {
+        action = detected.getClassId();
+        ppt->setAction(action);
+    }
+
     dstImage = MatImageToQt(srcImage);
-    emit sendFileFrame(dstImage);
+    emit sendFileFrame(dstImage, action);
 }
 
 void FileThread::startVideoRead(const std::string fileName)
@@ -123,9 +170,19 @@ void FileThread::startVideoRead(const std::string fileName)
         cap.read(srcFrame);
         // 检测分辨率，违规就resize
         srcFrame = frameResize(srcFrame);
+
+        // 将帧送入模型推导
         srcFrame = detected.forward(srcFrame);
+        // 将得到的分类送入ppt控制器
+        if (ppt != nullptr)
+        {
+            action = detected.getClassId();
+            ppt->setAction(action);
+        }
+
         dstFrame = MatImageToQt(srcFrame);
-        emit sendFileFrame(dstFrame);
+        emit sendFileFrame(dstFrame, action);
+
         currentFrame = cap.get(cv::CAP_PROP_POS_FRAMES);
         cv::waitKey(static_cast<int>(1000/fps));
         if (!isCap)
@@ -134,6 +191,11 @@ void FileThread::startVideoRead(const std::string fileName)
         }
     }
     cap.release();
+    if (ppt != nullptr)
+    {
+        delete ppt;
+    }
+    ppt = nullptr;
 }
 
 void FileThread::stopReadFrameSlot()

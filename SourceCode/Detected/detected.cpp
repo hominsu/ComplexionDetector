@@ -12,6 +12,11 @@ double Detected::getusagetime()
     return usagetime;
 }
 
+int Detected::getClassId()
+{
+    return classId;
+}
+
 std::vector<torch::Tensor> Detected::non_max_suppression(torch::Tensor preds, float score_thresh = 0.01, float iou_thresh = 0.35, bool isGpu = true)
 {
     std::vector<torch::Tensor> output;
@@ -160,6 +165,8 @@ cv::Mat Detected::forward(const cv::Mat &src)
         float score = dets[0][maxScoreId][4].item().toFloat();
         int classID = dets[0][maxScoreId][5].item().toInt();
 
+        std::cout << "left: " << left << " top: " << top << " right: " << right << " score: " << score << " ClassID: " << classID << std::endl;
+
         cv::rectangle(frame, cv::Rect(left, top, (right - left), (bottom - top)), cv::Scalar(0, 255, 0), 2);
 
         classId = classID;
@@ -168,6 +175,10 @@ cv::Mat Detected::forward(const cv::Mat &src)
             classnames[classID] + ": " + cv::format("%.2f", score),
             cv::Point(left, top),
             cv::FONT_HERSHEY_SIMPLEX, (right - left) / 200, cv::Scalar(0, 255, 0), 2);
+    }
+    else
+    {
+        classId = -1;
     }
     auto diff = std::chrono::system_clock::now() - start;
     usagetime = diff.count() / 10000;

@@ -8,6 +8,7 @@ mouse::mouse()
 	this->x = width;
 	this->y = height;
 }
+
 void mouse::getPos()
 {
 	while (1)
@@ -20,10 +21,12 @@ void mouse::getPos()
 		Sleep(3000);
 	}
 }
+
 void mouse::MouseLClick()
 {
 	mouse_event(MOUSEEVENTF_LEFTDOWN | MOUSEEVENTF_LEFTUP, 960, 540, 0, 0);
 }
+
 void mouse::MouseRClick()
 {
 	mouse_event(MOUSEEVENTF_RIGHTDOWN | MOUSEEVENTF_RIGHTUP, 0, 0, 0, 0);

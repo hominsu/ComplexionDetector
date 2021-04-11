@@ -1,44 +1,55 @@
 #include "CarryMove.h"
+
+
 CarryMove::CarryMove()
 {
 	std::cout << "等待指令" << std::endl;
 }
+
+CarryMove::~CarryMove()
+{
+
+}
+
 CarryMove::CarryMove(int signal)
 {
 	this->CarrySelect(signal);
 }
+
 void CarryMove::CarrySelect(int signal)
 {
 	switch (signal) {
-	case dian_ji://打开ppt
-		//cout << "1" << endl;
+	case DIANJI://打开ppt
+		std::cout << "1" << std::endl;
 		Start();
 		break;
-	case ping_yi://切换到下一页
-		//cout << "2" << endl;
+	case PINGYI://切换到下一页
+		std::cout << "2" << std::endl;
 		changeNext();
 		break;
-	case suo_fang://切换到上一页
-		//cout << "3" << endl;
+	case SUOFANG://切换到上一页
+		std::cout << "3" << std::endl;
 		changeBefore();
 		break;
-	case zhua_qu://放大
-		//cout << "4" << endl;
+	case ZHUAQU://放大
+		std::cout << "4" << std::endl;
 		enlarge();
 		break;
-	case xuan_zhuan://退出
-		//cout << "5" << endl;
+	case XUANZHUAN://退出
+		std::cout << "5" << std::endl;
 		quit();
 		break;
 	default:
 		break;
 	}
 }
+
 void CarryMove::setNum(int num)
 {
 	keybd_event(num, 0, 0, 0);//执行键位按下
 	keybd_event(num, 0, KEYEVENTF_KEYUP, 0);//执行键位起来，两个动作连起来构成一次模拟键盘
 }
+
 void CarryMove::setNum2(int num1, int num2)
 {
 	keybd_event(num1, 0, 0, 0);
@@ -52,14 +63,17 @@ void CarryMove::Start()
 	//MouseLClick();
 	setNum(116);//F5模拟
 }
+
 void CarryMove::changeNext()
 {
 	setNum(78);//N键模拟
 }
+
 void CarryMove::changeBefore()
 {
 	setNum(80);//P键模拟
 }
+
 void CarryMove::enlarge()
 {
 	MouseRClick();
@@ -69,13 +83,10 @@ void CarryMove::enlarge()
 	MouseLClick();//该操作为退出放大效果，目前执行完该操作才可以执行其他操作(例如鼠标右击)
 
 }
+
 void CarryMove::quit()
 {
 	MouseRClick();
 	Sleep(50);
 	setNum(69);//E键模拟
-}
-CarryMove::~CarryMove()
-{
-
 }

@@ -23,6 +23,7 @@ class Detected
 public:
 	void initalDetected();
 	void loadingModule();
+	int getClassId();
 	cv::Mat forward(const cv::Mat &src);
 	std::vector<torch::Tensor> non_max_suppression(torch::Tensor preds, float score_thresh, float iou_thresh, bool isGpu);
 	bool getisGpu();

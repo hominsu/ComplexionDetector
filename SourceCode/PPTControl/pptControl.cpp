@@ -1,17 +1,26 @@
 #include "pptControl.h"
-#include <thread>
+
+
 pptControl::pptControl(std::string dir,int signal)
 {
-	
 	setData(dir,signal);
-	keyboard* test = new keyboard(getDir());
+	key = new keyboard(getDir());
 	this->isStart = 0;
 	if (!this->Sign)
 	{
 		std::cout << "文件打开成功，等待指令" << std::endl;
 	}
-	
 }
+
+pptControl::~pptControl()
+{
+	if (key != NULL)
+	{
+		delete key;
+	}
+	key = NULL;
+}
+
 void pptControl::setData(const std::string dir,const int signal)
 {
 	this->Fdir = dir;
@@ -30,13 +39,12 @@ int pptControl::getSign()
 }
 bool pptControl::Run()
 {
-		
-		test->BoardCarry(getSign());
-		if (this->Sign == 1)
-		{
-			this->isStart = 1;
-		}
-		return true;
+	key->BoardCarry(getSign());
+	if (this->Sign == 1)
+	{
+		this->isStart = 1;
+	}
+	return true;
 }
 void pptControl::update(int signal)
 {

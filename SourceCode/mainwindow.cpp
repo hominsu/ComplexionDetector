@@ -32,7 +32,7 @@ void MainWindow::selectFile()
     // 设置文件对话框的标题
     fileDialog->setWindowTitle(QString::fromLocal8Bit("打开"));
     // 设置打开的默认目录
-    fileDialog->setDirectory("./");
+    fileDialog->setDirectory("");
     // 设置过滤器
     QStringList nameFilters;
     nameFilters << QString::fromLocal8Bit("Images (*.jpg *.jpeg)")
@@ -62,6 +62,18 @@ void MainWindow::fileOpenActionSlot()
     // 启用实时识别tab中的开始和取消按钮
     ui->pBtnFileStart->setEnabled(true);
     ui->pBtnFileCancel->setEnabled(false);
+
+    // 提示控制ppt相关注意事项
+    askPptControl();
+}
+
+void MainWindow::askPptControl()
+{
+    //QString::fromLocal8Bit("是否控制PPT?"),QString::fromLocal8Bit("控制PPT时需要将PPT程序置于顶层，否则无法接收命令"), QMessageBox::Yes | QMessageBox::No, QMessageBox::Yes);
+    QString title = QString::fromLocal8Bit("注意");
+    QString text = QString::fromLocal8Bit("控制PPT时需要将PPT程序置于顶层，否则程序无法接收命令\n\n如果不需要控制PPT，在选择PPT文件对话框中点击取消即可");
+    QMessageBox messagebox(QMessageBox::Icon::Information, title, text, QMessageBox::Yes);
+    messagebox.exec();
 }
 
 void MainWindow::cameraStatusSlot(const bool isEnable)
@@ -106,6 +118,9 @@ void MainWindow::noneCameraSlot()
 
 void MainWindow::onPBtnOpenCameraSlot()
 {
+    // 提示控制ppt相关注意事项
+    askPptControl();
+
     // 新建一个摄像头控制成员
     cameraThread = new CameraThreadController(this);
     // 连接控制器的发送信号和主窗口的处理槽
@@ -140,11 +155,67 @@ void MainWindow::onPBtnCloseCameraSlot()
     }
 }
 
-void MainWindow::readImageSlot(const QImage image)
+void MainWindow::readImageSlot(const QImage image, int action)
 {
+    // 清空上一帧中在结果框中显示的图标
+    ui->actionActionView->clear();
+
     // 将一帧显示到label中
     ui->CameraView->setPixmap(QPixmap::fromImage(image));
     cameraImage = image;
+
+    // 设置图片居中
+    ui->actionActionView->setAlignment(Qt::AlignCenter);
+
+    // 显示对应动作的图标
+    QPixmap pixmap;
+    switch (action)
+    {
+    case 0:
+        pixmap = QPixmap(":/action/action/dianji.png");
+        ui->actionActionView->setPixmap(pixmap.scaled(ui->actionActionView->width() / 2,
+            ui->actionActionView->width() / 2,
+            Qt::KeepAspectRatio,
+            Qt::SmoothTransformation));
+        break;
+
+    case 1:
+        pixmap = QPixmap(":/action/action/pingyi.png");
+        ui->actionActionView->setPixmap(pixmap.scaled(ui->actionActionView->width() / 2,
+            ui->actionActionView->width() / 2,
+            Qt::KeepAspectRatio,
+            Qt::SmoothTransformation));
+        break;
+
+    case 2:
+        pixmap = QPixmap(":/action/action/suofang.png");
+        ui->actionActionView->setPixmap(pixmap.scaled(ui->actionActionView->width() / 2,
+            ui->actionActionView->width() / 2,
+            Qt::KeepAspectRatio,
+            Qt::SmoothTransformation));
+        break;
+
+    case 3:
+        pixmap = QPixmap(":/action/action/zhuaqu.png");
+        ui->actionActionView->setPixmap(pixmap.scaled(ui->actionActionView->width() / 2,
+            ui->actionActionView->width() / 2,
+            Qt::KeepAspectRatio,
+            Qt::SmoothTransformation));
+        break;
+
+    case 4:
+        pixmap = QPixmap(":/action/action/xuanzhuan.png");
+        ui->actionActionView->setPixmap(pixmap.scaled(ui->actionActionView->width() / 2,
+            ui->actionActionView->width() / 2,
+            Qt::KeepAspectRatio,
+            Qt::SmoothTransformation));
+        break;
+
+    default:
+        break;
+    }
+
+    std::cout << "action: " << action << std::endl;
 }
 
 void MainWindow::onPBtnCatchPictureSlot()
@@ -250,25 +321,64 @@ void MainWindow::onPBtnFileCancelSlot()
     }
 }
 
-/*
-void MainWindow::detectedStart()
+void MainWindow::readFrameSlot(const QImage frame, int action)
 {
-    detected = new Detected(this);
-    connect(this, &MainWindow::sendImageDetected, detected, &Detected::sendImageToThreadSlot);
-    connect(detected, &Detected::recvImageSlot, this, &MainWindow::readFrameSlot);
-}
+    // 清空上一帧中在结果框中显示的图标
+    ui->actionActionView->clear();
 
-void MainWindow::detectedStop()
-{
-    disconnect(this, &MainWindow::sendImageDetected, detected, &Detected::sendImageToThreadSlot);
-    disconnect(detected, &Detected::recvImageSlot, this, &MainWindow::readFrameSlot);
-
-    delete detected;
-}
-*/
-
-void MainWindow::readFrameSlot(const QImage frame)
-{
     // 将摄像机线程返回的帧显示在lable中
     ui->FileView->setPixmap(QPixmap::fromImage(frame));
+
+    // 设置图片居中
+    ui->actionActionView->setAlignment(Qt::AlignCenter);
+
+    // 显示对应动作的图标
+    QPixmap pixmap;
+    switch (action)
+    {
+    case 0:
+        pixmap = QPixmap(":/action/action/dianji.png");
+        ui->actionActionView->setPixmap(pixmap.scaled(ui->actionActionView->width() / 2,
+            ui->actionActionView->width() / 2,
+            Qt::KeepAspectRatio,
+            Qt::SmoothTransformation));
+        break;
+
+    case 1:
+        pixmap = QPixmap(":/action/action/pingyi.png");
+        ui->actionActionView->setPixmap(pixmap.scaled(ui->actionActionView->width() / 2,
+            ui->actionActionView->width() / 2,
+            Qt::KeepAspectRatio,
+            Qt::SmoothTransformation));
+        break;
+
+    case 2:
+        pixmap = QPixmap(":/action/action/suofang.png");
+        ui->actionActionView->setPixmap(pixmap.scaled(ui->actionActionView->width() / 2,
+            ui->actionActionView->width() / 2,
+            Qt::KeepAspectRatio,
+            Qt::SmoothTransformation));
+        break;
+
+    case 3:
+        pixmap = QPixmap(":/action/action/zhuaqu.png");
+        ui->actionActionView->setPixmap(pixmap.scaled(ui->actionActionView->width() / 2,
+            ui->actionActionView->width() / 2,
+            Qt::KeepAspectRatio,
+            Qt::SmoothTransformation));
+        break;
+
+    case 4:
+        pixmap = QPixmap(":/action/action/xuanzhuan.png");
+        ui->actionActionView->setPixmap(pixmap.scaled(ui->actionActionView->width() / 2,
+            ui->actionActionView->width() / 2,
+            Qt::KeepAspectRatio,
+            Qt::SmoothTransformation));
+        break;
+
+    default:
+        break;
+    }
+
+    std::cout << "action: " << action << std::endl;
 }

@@ -61,6 +61,9 @@
     <ClCompile Include="SourceCode\PPTControl\pptControl.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="SourceCode\PPTControl\PPtController.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="SourceCode\CameraThreadController.h">
@@ -71,10 +74,10 @@
     </QtMoc>
   </ItemGroup>
   <ItemGroup>
-    <None Include="ClassDiagram.cd" />
     <None Include="module\action.names">
       <Filter>Resource Files</Filter>
     </None>
+    <None Include="ClassDiagram.cd" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="SourceCode\Detected\detected.h">
@@ -90,6 +93,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="SourceCode\PPTControl\pptControl.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SourceCode\PPTControl\PPtController.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

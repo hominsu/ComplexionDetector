@@ -39,9 +39,9 @@ void CameraThreadController::cameraStatusSlot(const bool isEnable)
     emit cameraEnableSignal(isEnable);
 }
 
-void CameraThreadController::recvImageSlot(const QImage qImage)
+void CameraThreadController::recvImageSlot(const QImage qImage, int action)
 {
-    emit sendImage(qImage);
+    emit sendImage(qImage, action);
 }
 
 void CameraThreadController::statusVedioRecordingSlot(const QString fileName, const bool isRecoding)
@@ -84,6 +84,34 @@ void CameraThread::statusCatchFrame(const QString fileName, const bool _isRecord
     }
 }
 
+std::string CameraThread::selectFile()
+{
+    // 打开一个文件对话框
+    QFileDialog* fileDialog = new QFileDialog();
+    // 设置文件对话框的基本信息
+    // 设置文件对话框的标题
+    //fileDialog->setWindowTitle(QString::fromLocal8Bit("选择需要打开的PPT"));
+    fileDialog->setWindowTitle("选择需要打开的PPT");
+    // 设置打开的默认目录
+    fileDialog->setDirectory("");
+    // 设置过滤器
+    QStringList nameFilters;
+    nameFilters << QString::fromLocal8Bit("PPT (*.ppt *.pptx)");
+    fileDialog->setNameFilters(nameFilters);
+
+    QStringList _fileName;
+    if (fileDialog->exec())
+    {
+        _fileName = fileDialog->selectedFiles();
+    }
+
+    if (!_fileName.isEmpty())
+    {
+        return _fileName[0].toStdString();
+    }
+    return "";
+}
+
 void CameraThread::startCamera()
 {
     // 打开摄像头
@@ -92,6 +120,16 @@ void CameraThread::startCamera()
     {
         emit noneCamera();
         return;
+    }
+
+    std::string var = selectFile();
+    if (!var.empty())
+    {
+        ppt = new PPtController(var);
+    }
+    else
+    {
+        ppt = nullptr;
     }
 
     detected.initalDetected();
@@ -153,10 +191,16 @@ void CameraThread::readframe()
 
         dstImage = detected.forward(dstImage);
 
+        if (ppt != nullptr)
+        {
+            action = detected.getClassId();
+            ppt->setAction(action);
+        }
+
         // 将opencv的mat转换为qimage
         image = MatImageToQt(dstImage);
         // 将处理好的图片发送
-        emit sendImage(image);
+        emit sendImage(image, action);
         cv::waitKey(timerDelay);
     }
 }

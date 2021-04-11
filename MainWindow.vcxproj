@@ -95,7 +95,7 @@
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
     </ClCompile>
     <Link>
-      <SubSystem>Windows</SubSystem>
+      <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>false</GenerateDebugInformation>
     </Link>
   </ItemDefinitionGroup>
@@ -105,6 +105,7 @@
     <ClCompile Include="SourceCode\PPTControl\keyboard.cpp" />
     <ClCompile Include="SourceCode\PPTControl\mouse.cpp" />
     <ClCompile Include="SourceCode\PPTControl\pptControl.cpp" />
+    <ClCompile Include="SourceCode\PPTControl\PPtController.cpp" />
     <QtRcc Include="SourceCode\mainwindow.qrc" />
     <QtUic Include="SourceCode\mainwindow.ui" />
     <QtMoc Include="SourceCode\mainwindow.h" />
@@ -129,6 +130,7 @@
     <ClInclude Include="SourceCode\PPTControl\keyboard.h" />
     <ClInclude Include="SourceCode\PPTControl\mouse.h" />
     <ClInclude Include="SourceCode\PPTControl\pptControl.h" />
+    <ClInclude Include="SourceCode\PPTControl\PPtController.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Condition="Exists('$(QtMsBuild)\qt.targets')">

@@ -10,6 +10,7 @@ class pptControl
 {
 public:
 	pptControl(std::string dir,int signal);
+	~pptControl();
 	void setData(const std::string dir,const int signal);//给该对象的参数赋值
 	void update(int signal);//更新指令,内部有延迟1s的操作
 	std::string getDir();//获得路径，和this->Fdir一个意思
@@ -23,6 +24,6 @@ public:
 private:
 	std::string Fdir;//路径
 	int Sign;//信号
-	keyboard* test;//最终控制操作的临时对象
+	keyboard* key;//最终控制操作的临时对象
 };
 
