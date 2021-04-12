@@ -25,6 +25,7 @@ private:
     void createConnect();
     void selectFile();
     void askPptControl();
+    void displayAction(int action);
 
 
 private:

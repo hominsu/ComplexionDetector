@@ -164,56 +164,7 @@ void MainWindow::readImageSlot(const QImage image, int action)
     ui->CameraView->setPixmap(QPixmap::fromImage(image));
     cameraImage = image;
 
-    // 设置图片居中
-    ui->actionActionView->setAlignment(Qt::AlignCenter);
-
-    // 显示对应动作的图标
-    QPixmap pixmap;
-    switch (action)
-    {
-    case 0:
-        pixmap = QPixmap(":/action/action/dianji.png");
-        ui->actionActionView->setPixmap(pixmap.scaled(ui->actionActionView->width() / 2,
-            ui->actionActionView->width() / 2,
-            Qt::KeepAspectRatio,
-            Qt::SmoothTransformation));
-        break;
-
-    case 1:
-        pixmap = QPixmap(":/action/action/pingyi.png");
-        ui->actionActionView->setPixmap(pixmap.scaled(ui->actionActionView->width() / 2,
-            ui->actionActionView->width() / 2,
-            Qt::KeepAspectRatio,
-            Qt::SmoothTransformation));
-        break;
-
-    case 2:
-        pixmap = QPixmap(":/action/action/suofang.png");
-        ui->actionActionView->setPixmap(pixmap.scaled(ui->actionActionView->width() / 2,
-            ui->actionActionView->width() / 2,
-            Qt::KeepAspectRatio,
-            Qt::SmoothTransformation));
-        break;
-
-    case 3:
-        pixmap = QPixmap(":/action/action/zhuaqu.png");
-        ui->actionActionView->setPixmap(pixmap.scaled(ui->actionActionView->width() / 2,
-            ui->actionActionView->width() / 2,
-            Qt::KeepAspectRatio,
-            Qt::SmoothTransformation));
-        break;
-
-    case 4:
-        pixmap = QPixmap(":/action/action/xuanzhuan.png");
-        ui->actionActionView->setPixmap(pixmap.scaled(ui->actionActionView->width() / 2,
-            ui->actionActionView->width() / 2,
-            Qt::KeepAspectRatio,
-            Qt::SmoothTransformation));
-        break;
-
-    default:
-        break;
-    }
+    displayAction(action);
 
     std::cout << "action: " << action << std::endl;
 }
@@ -329,6 +280,13 @@ void MainWindow::readFrameSlot(const QImage frame, int action)
     // 将摄像机线程返回的帧显示在lable中
     ui->FileView->setPixmap(QPixmap::fromImage(frame));
 
+    displayAction(action);
+
+    std::cout << "action: " << action << std::endl;
+}
+
+void MainWindow::displayAction(int action)
+{
     // 设置图片居中
     ui->actionActionView->setAlignment(Qt::AlignCenter);
 
@@ -379,6 +337,4 @@ void MainWindow::readFrameSlot(const QImage frame, int action)
     default:
         break;
     }
-
-    std::cout << "action: " << action << std::endl;
 }
