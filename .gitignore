@@ -1,7 +1,10 @@
-x64/Debug/
-x64/Release/
+x64/
 backup/
 .vs/
 /bin/x64/Release
 /model
 /MainWindow.dir/x64/Release
+*.sln
+*.vcxproj
+*.filters
+*.user
