@@ -76,6 +76,18 @@ void MainWindow::askPptControl()
     messagebox.exec();
 }
 
+bool MainWindow::askNoneCuda() {
+    QString title = QString::fromLocal8Bit("警告");
+    QString text = QString::fromLocal8Bit("没有检测到Nvidia显卡或是Cuda 10.2\n继续将会使用CPU进行运算\n\
+实时识别会非常卡顿，建议使用文件识别\n\n是否继续？");
+    QMessageBox messagebox(QMessageBox::Icon::Warning, title, text, QMessageBox::Yes | QMessageBox::No);
+    if (messagebox.exec() == QMessageBox::Yes)
+    {
+        return true;
+    }
+    return false;
+}
+
 void MainWindow::cameraStatusSlot(const bool isEnable)
 {
     // 处理摄像机线程回传的状态
@@ -118,6 +130,13 @@ void MainWindow::noneCameraSlot()
 
 void MainWindow::onPBtnOpenCameraSlot()
 {
+    if (!torch::cuda::is_available())
+    {
+        if (!askNoneCuda()) {
+            return;
+        }
+    }
+
     // 提示控制ppt相关注意事项
     askPptControl();
 

@@ -8,6 +8,11 @@
 #include <QPushButton>
 #include <QMessageBox>
 #include <QFileDialog>
+
+#undef slots
+#include <torch/script.h>
+#define slots Q_SLOTS
+
 #include "ui_mainwindow.h"
 #include "CameraThreadController.h"
 #include "FileThreadController.h"
@@ -25,6 +30,7 @@ private:
     void createConnect();
     void selectFile();
     void askPptControl();
+    bool askNoneCuda();
     void displayAction(int action);
 
 
