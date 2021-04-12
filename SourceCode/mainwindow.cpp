@@ -252,6 +252,8 @@ void MainWindow::onPBtnFileCancelSlot()
 {
     if (fileThread)
     {
+        ui->pBtnFileCancel->setEnabled(false);
+
         emit stopReadFrameSignal();
         // 关闭连接
         disconnect(this, &MainWindow::fileThreadStartSignal, fileThread, &FileThreadController::fileThreadStartSlot);
@@ -263,9 +265,9 @@ void MainWindow::onPBtnFileCancelSlot()
 
         // 清空lable
         ui->FileView->clear();
+
         // 设置开始按钮和取消按钮的状态
         ui->pBtnFileStart->setEnabled(true);
-        ui->pBtnFileCancel->setEnabled(false);
         ui->tabWidget->setTabEnabled(0, true);
         ui->actionOpenFile->setEnabled(true);
         ui->tBtnOpenFile->setEnabled(true);
