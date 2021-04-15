@@ -1,9 +1,10 @@
 #pragma once
 
-#include <QWidget>
+#include <QDialog>
+#include <QTextEdit>
 #include "ui_socketwindow.h"
 
-class SocketWindow : public QWidget
+class SocketWindow : public QDialog
 {
 	Q_OBJECT
 
@@ -12,5 +13,13 @@ public:
 	~SocketWindow();
 
 private:
-	Ui::SocketWindow ui;
+	Ui::SocketWindow *ui;
+
+signals:
+	void sendIPSiginal(QString IPAddr);
+	void sendCancelSignal();
+
+private slots:
+	void sendIPSlot();
+	void sendCancelSlot();
 };

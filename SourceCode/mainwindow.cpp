@@ -76,6 +76,20 @@ void MainWindow::askPptControl()
     messagebox.exec();
 }
 
+void MainWindow::askClient()
+{
+    sw = new SocketWindow(Q_NULLPTR);
+    connect(sw, &SocketWindow::sendIPSiginal, this, &MainWindow::setIPSlot);
+    connect(sw, &SocketWindow::sendCancelSignal, this, &MainWindow::setSwCancel);
+    sw->exec();
+
+    isClient = true;
+    if (ip == "")
+    {
+        isClient = false;
+    }
+}
+
 bool MainWindow::askNoneCuda() {
     QString title = QString::fromLocal8Bit("警告");
     QString text = QString::fromLocal8Bit("没有检测到Nvidia显卡或是Cuda 10.2\n继续将会使用CPU进行运算\n\
@@ -137,6 +151,19 @@ void MainWindow::onPBtnOpenCameraSlot()
         }
     }
 
+    // Client还是Server
+    askClient();
+
+    if (isClient)
+    {
+        connectServer();
+    }
+    else
+    {
+        InitSocket();
+    }
+
+
     // 提示控制ppt相关注意事项
     askPptControl();
 
@@ -149,6 +176,7 @@ void MainWindow::onPBtnOpenCameraSlot()
     connect(cameraThread, &CameraThreadController::cameraEnableSignal, this, &MainWindow::cameraStatusSlot);
     connect(cameraThread, &CameraThreadController::noneCameraSignal, this, &MainWindow::noneCameraSlot);
     connect(this, &MainWindow::stopReadCameraFrameSignal, cameraThread, &CameraThreadController::stopReadFrameSlot);
+    connect(this, &MainWindow::addClientActionSignals, cameraThread, &CameraThreadController::addClientActionSlot);
 
     // 禁用打开摄像头按钮
     ui->pBtnOpenCamera->setEnabled(false);
@@ -162,9 +190,28 @@ void MainWindow::onPBtnCloseCameraSlot()
 {
     if (cameraThread)
     {
+        if (mp_clientSocket != NULL)
+        {
+            delete mp_clientSocket;
+        }
+        if (mp_TCPServer != NULL)
+        {
+            delete mp_TCPServer;
+        }
+        if (mp_TCPSocket != NULL)
+        {
+            delete mp_TCPSocket;
+        }
+        mp_clientSocket = NULL;
+        mp_TCPServer = NULL;
+        mp_TCPSocket = NULL;
+        isClient = false;
+        ip = "";
+
         emit stopReadCameraFrameSignal();
         // 关闭线程
         delete cameraThread;
+
         // 清空屏幕
         ui->CameraView->clear();
         // 禁用关闭摄像头按钮、截图按钮、录制按钮
@@ -184,6 +231,10 @@ void MainWindow::readImageSlot(const QImage image, int action)
     cameraImage = image;
 
     displayAction(action);
+    if (isClient)
+    {
+        sendData(action);
+    }
 
     std::cout << "action: " << action << std::endl;
 }
@@ -358,4 +409,102 @@ void MainWindow::displayAction(int action)
     default:
         break;
     }
+}
+
+void MainWindow::setIPSlot(QString str)
+{
+    this->ip = str;
+    disconnect(sw, &SocketWindow::sendIPSiginal, this, &MainWindow::setIPSlot);
+    disconnect(sw, &SocketWindow::sendCancelSignal, this, &MainWindow::setSwCancel);
+    sw->close();
+    delete sw;
+}
+
+
+void MainWindow::setSwCancel()
+{
+    this->ip = "";
+    disconnect(sw, &SocketWindow::sendIPSiginal, this, &MainWindow::setIPSlot);
+    disconnect(sw, &SocketWindow::sendCancelSignal, this, &MainWindow::setSwCancel);
+    sw->close();
+    delete sw;
+}
+
+
+void MainWindow::connectServer()
+{
+    mp_clientSocket = new QTcpSocket();
+    mp_clientSocket->connectToHost(ip, port);
+    if (!mp_clientSocket->waitForConnected(30000))
+    {
+        QMessageBox::information(this, "QTwangluo", "connect server failed");
+        return;
+    }
+    connect(mp_clientSocket, SIGNAL(readyRead()), this, SLOT(ClientRecvData()));//socket连接 读取信号 槽连接到接收读取的数据
+}
+
+void MainWindow::sendData(const int action)
+{
+    char sendMsgChar[1024] = { 0 };
+    memset(sendMsgChar, action, sizeof(char) * 1024);
+    int sendRe = mp_clientSocket->write(sendMsgChar, strlen(sendMsgChar));
+    if (sendRe == -1)
+    {
+        QMessageBox::information(this, "QTwangluo", "data send failed");
+        return;
+    }
+
+}
+
+void MainWindow::ServerNewConnection()
+{
+    mp_TCPSocket = mp_TCPServer->nextPendingConnection();
+    if(!mp_TCPSocket)
+    {
+        QMessageBox::information(this, "QTwangluo","not get server connection！");
+        return;
+    }
+    else
+    {
+        QMessageBox::information(this, "QTwangluo","get server connection");
+        connect(mp_TCPSocket, SIGNAL(readyRead()),this, SLOT(ServerReadData()));//服务端socket连接 读取信号 接收读取客户端的数据
+        connect(mp_TCPSocket, SIGNAL(disconnected()), this, SLOT(sServerDisConnection()));//断开连接的提示，无实际用处
+    }
+}
+
+void MainWindow::ServerReadData()
+{
+    char buffer[1024] = {0};
+    mp_TCPSocket->read(buffer, 1024);
+    if( strlen(buffer) > 0)
+    {
+        emit addClientActionSignals(buffer[0]);
+        return;
+    }
+    else
+    {
+        QMessageBox::information(this, "QTwangluo", "未正确接收数据");
+        return;
+    }
+}
+
+void MainWindow::InitSocket()
+{
+    mp_TCPServer = new QTcpServer();
+    if(!mp_TCPServer->listen(QHostAddress::LocalHost, port))
+    {
+        QMessageBox::information(this, "QTwangluo","server listen failed");
+        return;
+    }
+    else
+    {
+        QMessageBox::information(this, "QTwangluo", "server listen suc");
+    }
+    connect(mp_TCPServer, SIGNAL(newConnection()), this, SLOT(ServerNewConnection()));
+}
+
+void MainWindow::sServerDisConnection()
+{
+    QMessageBox::information(this, "QTwangluo", "disconnect");
+        return;
 }
