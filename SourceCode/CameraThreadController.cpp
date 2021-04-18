@@ -139,6 +139,7 @@ void CameraThread::startCamera()
     }
 
     detected.initalDetected();
+    /*
     if (detected.getisGpu())
     {
         std::cout << "Using GPU" << std::endl;
@@ -147,6 +148,7 @@ void CameraThread::startCamera()
     {
         std::cout << "Using CPU" << std::endl;
     }
+    */
     detected.loadingModule();
 
     // 发送打开信号
@@ -197,9 +199,9 @@ void CameraThread::readframe()
 
         dstImage = detected.forward(dstImage);
 
+        action = detected.getClassId();
         if (ppt != nullptr)
         {
-            action = detected.getClassId();
             ppt->setAction(action);
         }
 
@@ -207,7 +209,7 @@ void CameraThread::readframe()
         image = MatImageToQt(dstImage);
         // 将处理好的图片发送
         emit sendImage(image, action);
-        cv::waitKey(timerDelay);
+        //cv::waitKey(timerDelay);
     }
 }
 
