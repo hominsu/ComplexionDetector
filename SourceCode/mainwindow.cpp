@@ -214,6 +214,8 @@ void MainWindow::onPBtnCloseCameraSlot()
 
         // 清空屏幕
         ui->CameraView->clear();
+        ui->actionActionView->clear();
+
         // 禁用关闭摄像头按钮、截图按钮、录制按钮
         ui->pBtnCloseCamera->setEnabled(false);
         ui->pBtnCatchPicture->setEnabled(false);
@@ -236,7 +238,7 @@ void MainWindow::readImageSlot(const QImage image, int action)
         sendData(action);
     }
 
-    std::cout << "action: " << action << std::endl;
+    //std::cout << "action: " << action << std::endl;
 }
 
 void MainWindow::onPBtnCatchPictureSlot()
@@ -335,6 +337,7 @@ void MainWindow::onPBtnFileCancelSlot()
 
         // 清空lable
         ui->FileView->clear();
+        ui->actionActionView->clear();
 
         // 设置开始按钮和取消按钮的状态
         ui->pBtnFileStart->setEnabled(true);
@@ -354,7 +357,7 @@ void MainWindow::readFrameSlot(const QImage frame, int action)
 
     displayAction(action);
 
-    std::cout << "action: " << action << std::endl;
+    //std::cout << "action: " << action << std::endl;
 }
 
 void MainWindow::displayAction(int action)

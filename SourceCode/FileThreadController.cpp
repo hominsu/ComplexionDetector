@@ -89,6 +89,7 @@ void FileThread::fileRead(const QString fileName)
 
     // 初始化模型
     detected.initalDetected();
+    /*
     if (detected.getisGpu())
     {
         std::cout << "Using GPU" << std::endl;
@@ -97,6 +98,7 @@ void FileThread::fileRead(const QString fileName)
     {
         std::cout << "Using CPU" << std::endl;
     }
+    */
     detected.loadingModule();
     
 
@@ -143,15 +145,16 @@ void FileThread::startImageRead(const std::string fileName)
     // 将帧送入模型推导
     srcImage = detected.forward(srcImage);
 
+    this->action = detected.getClassId();
+
     // 将得到的分类送入ppt控制器
     if (ppt != nullptr)
     {
-        action = detected.getClassId();
-        ppt->setAction(action);
+        ppt->setAction(this->action);
     }
 
     dstImage = MatImageToQt(srcImage);
-    emit sendFileFrame(dstImage, action);
+    emit sendFileFrame(dstImage, this->action);
 }
 
 void FileThread::startVideoRead(const std::string fileName)
@@ -173,10 +176,11 @@ void FileThread::startVideoRead(const std::string fileName)
 
         // 将帧送入模型推导
         srcFrame = detected.forward(srcFrame);
+
+        action = detected.getClassId();
         // 将得到的分类送入ppt控制器
         if (ppt != nullptr)
         {
-            action = detected.getClassId();
             ppt->setAction(action);
         }
 

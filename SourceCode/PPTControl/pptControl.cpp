@@ -8,7 +8,7 @@ pptControl::pptControl(std::string dir,int signal)
 	this->isStart = 0;
 	if (!this->Sign)
 	{
-		std::cout << "文件打开成功，等待指令" << std::endl;
+		//std::cout << "文件打开成功，等待指令" << std::endl;
 	}
 }
 
@@ -56,7 +56,7 @@ void pptControl::update(int signal)
 	}
 	else
 	{
-		std::cout << "当前文件未开启" << std::endl;
+		//std::cout << "当前文件未开启" << std::endl;
 	}
 	
 }

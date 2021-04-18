@@ -13,6 +13,8 @@
 #include <torch/torch.h>
 #define slots Q_SLOTS
 
+#include <sstream>
+#include <iomanip>
 #include <algorithm>
 #include <iostream>
 #include <memory>

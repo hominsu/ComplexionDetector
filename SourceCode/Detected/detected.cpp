@@ -165,27 +165,34 @@ cv::Mat Detected::forward(const cv::Mat &src)
         float score = dets[0][maxScoreId][4].item().toFloat();
         int classID = dets[0][maxScoreId][5].item().toInt();
 
-        std::cout << "left: " << left << " top: " << top << " right: " << right << " score: " << score << " ClassID: " << classID << std::endl;
+        //std::cout << "left: " << left << " top: " << top << " right: " << right << " score: " << score << " ClassID: " << classID << std::endl;
 
         cv::rectangle(frame, cv::Rect(left, top, (right - left), (bottom - top)), cv::Scalar(0, 255, 0), 2);
 
-        classId = classID;
+        this->classId = classID;
 
         cv::putText(frame,
             classnames[classID] + ": " + cv::format("%.2f", score),
             cv::Point(left, top),
-            cv::FONT_HERSHEY_SIMPLEX, (right - left) / 200, cv::Scalar(0, 255, 0), 2);
+            cv::FONT_HERSHEY_SIMPLEX, (right - left) / 300, cv::Scalar(0, 255, 0), 2);
     }
     else
     {
-        classId = -1;
+        this->classId = -1;
     }
     auto diff = std::chrono::system_clock::now() - start;
-    usagetime = diff.count() / 10000;
 
-    //cv::imshow("", frame);
-    //cv::resize(frame, frame, cv::Size(width, height));
-    //if (cv::waitKey(1) == 27) break;
+    std::stringstream timeusage;
+    timeusage.precision(1);
+    timeusage << "Time Usage: " << std::fixed << diff.count() / 10000 << "ms";
+
+    std::stringstream sfps;
+    sfps.precision(3);
+    sfps << "FPS: " << std::fixed << 10000000.0 / diff.count();
+
+    putText(frame, timeusage.str(), cv::Point(0, 25), cv::FONT_HERSHEY_SIMPLEX, 0.7, cv::Scalar(0, 255, 0), 2);
+    putText(frame, sfps.str(), cv::Point(0, 50), cv::FONT_HERSHEY_SIMPLEX, 0.7, cv::Scalar(0, 255, 0), 2);
+
     return frame;
 }
 

@@ -3,6 +3,7 @@
 #ifndef FILETHREADCONTROLLER_H
 #define FILETHREADCONTROLLER_H
 
+#include <QDebug>
 #include <QObject>
 #include <QThread>
 #include <QTimer>
