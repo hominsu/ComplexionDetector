@@ -105,11 +105,11 @@ void Detected::loadingModule()
 {
     if (isGpu)
     {
-        module = torch::jit::load("model/last_gpu.torchscript.pt");
+        module = torch::jit::load("model/gpu.torchscript.pt");
     }
     else
     {
-        module = torch::jit::load("model/last.torchscript.pt");
+        module = torch::jit::load("model/cpu.torchscript.pt");
     }
 
     module.to(this->device_type); // 模型加载至GPU或GPU

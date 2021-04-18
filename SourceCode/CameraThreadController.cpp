@@ -17,6 +17,7 @@ CameraThreadController::CameraThreadController(QObject *parent): QObject(parent)
     connect(this, &CameraThreadController::statusCameraThreadCatchFrame, camera, &CameraThread::statusCatchFrame);
     connect(camera, &CameraThread::cameraEnable, this, &CameraThreadController::cameraStatusSlot);
     connect(camera, &CameraThread::noneCamera, this, &CameraThreadController::recvNoneCameraSlot);
+    connect(this, &CameraThreadController::setClientActionSignal, camera, &CameraThread::addClientActionSlot);
     connect(this, &CameraThreadController::stopReadFrameSignal, camera, &CameraThread::stopReadFrameSlot);
 
     //启动线程
@@ -42,6 +43,11 @@ void CameraThreadController::cameraStatusSlot(const bool isEnable)
 void CameraThreadController::recvImageSlot(const QImage qImage, int action)
 {
     emit sendImage(qImage, action);
+}
+
+void CameraThreadController::addClientActionSlot(const int action)
+{
+    emit setClientActionSignal(action);
 }
 
 void CameraThreadController::statusVedioRecordingSlot(const QString fileName, const bool isRecoding)
@@ -203,6 +209,11 @@ void CameraThread::readframe()
         emit sendImage(image, action);
         cv::waitKey(timerDelay);
     }
+}
+
+void CameraThread::addClientActionSlot(const int action)
+{
+    ppt->setAction(action);
 }
 
 QImage CameraThread::MatImageToQt(const cv::Mat &src)

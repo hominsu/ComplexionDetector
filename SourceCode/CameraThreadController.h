@@ -37,6 +37,7 @@ signals:
     void cameraEnableSignal(const bool isEnable);
     void noneCameraSignal();
     void stopReadFrameSignal();
+    void setClientActionSignal(const int action);
 
 public slots:
     void recvImageSlot(const QImage qImage, int action);    //处理线程执行的结果
@@ -44,6 +45,7 @@ public slots:
     void cameraStatusSlot(const bool isEnable);
     void recvNoneCameraSlot();
     void stopReadFrameSlot();
+    void addClientActionSlot(const int action);
 };
 
 
@@ -93,6 +95,7 @@ public slots:
     void startCamera();
     void statusCatchFrame(const QString fileName, const bool isRecording);
     void stopReadFrameSlot();
+    void addClientActionSlot(const int action);
 
 };
 

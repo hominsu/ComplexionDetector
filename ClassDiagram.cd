@@ -1,80 +1,94 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ClassDiagram MajorVersion="1" MinorVersion="1">
-  <Class Name="Detected" Collapsed="true">
-    <Position X="12.25" Y="0.5" Width="1.5" />
+  <Class Name="Detected">
+    <Position X="15.25" Y="5.5" Width="2" />
     <TypeIdentifier>
       <HashCode>gAAEAgAAIAAAIAAAAAAAgAAQAAAABAIQQQAAAAAAAAg=</HashCode>
       <FileName>SourceCode\Detected\detected.h</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="CarryMove">
-    <Position X="6.5" Y="8.5" Width="2" />
+    <Position X="6" Y="9" Width="2" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAACACSAgAAAAAAAAAACAAAAAAAgBBAAAAAAE=</HashCode>
       <FileName>SourceCode\PPTControl\CarryMove.h</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="keyboard">
-    <Position X="9.25" Y="8.5" Width="1.75" />
+    <Position X="8.75" Y="9" Width="1.75" />
     <TypeIdentifier>
       <HashCode>AAgAAgAIAACAAAQAAAAAAAAAAAAAAAAAAABgAAAAAgA=</HashCode>
       <FileName>SourceCode\PPTControl\keyboard.h</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="mouse">
-    <Position X="8" Y="5.5" Width="1.5" />
+    <Position X="7.5" Y="6" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAEAAACAIAAAAAABgAAAAAAA=</HashCode>
       <FileName>SourceCode\PPTControl\mouse.h</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="pptControl" Collapsed="true">
-    <Position X="14" Y="0.5" Width="1.5" />
+  <Class Name="pptControl">
+    <Position X="17.75" Y="0.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>ACEAAAAAEAAAAFAAAAAEAAAEAAAAABCAAAAAAAAEAAI=</HashCode>
       <FileName>SourceCode\PPTControl\pptControl.h</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="MainWindow">
-    <Position X="0.5" Y="10" Width="2.5" />
+  <Class Name="PPtController">
+    <Position X="15.25" Y="0.5" Width="1.75" />
     <TypeIdentifier>
-      <HashCode>AABFACAAAAACEAJIAAAhAAwICAAQAAABAGQAAAIQAAA=</HashCode>
+      <HashCode>ECAABAIAAAhAAAEEAAICBACAAAgAAAAAEAAAQAAIAAA=</HashCode>
+      <FileName>SourceCode\PPTControl\PPtController.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MainWindow">
+    <Position X="12" Y="1.75" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>AARFgSAAAAACEAZIAAAlCowMCABQAAkBYGQkBAIQAAA=</HashCode>
       <FileName>SourceCode\mainwindow.h</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="CameraThreadController">
-    <Position X="6" Y="1.75" Width="2.5" />
+    <Position X="8.75" Y="1.75" Width="2.5" />
     <TypeIdentifier>
-      <HashCode>AABAAAAAAAAEEAEAAAAAEAQAAAIAAAAAAAEIAAIAAAg=</HashCode>
+      <HashCode>AABAAAAAAAAEEAEACAAAEAQAAAIQAAAAAAEIAAIAAAg=</HashCode>
       <FileName>SourceCode\CameraThreadController.h</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="CameraThread">
-    <Position X="0.75" Y="1.75" Width="2.25" />
+    <Position X="3" Y="1.75" Width="2.25" />
     <TypeIdentifier>
-      <HashCode>ECAQBUCAAAAgDKAAAAAAEAwKEAogAAAAABAAEAAIAAA=</HashCode>
+      <HashCode>ECAQBUCAAAAgDKBAAAAAEAwKEAowAAAAABAAUAAIAAA=</HashCode>
       <FileName>SourceCode\CameraThreadController.h</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="FileThreadController">
-    <Position X="9.25" Y="1.75" Width="2" />
+    <Position X="6" Y="1.75" Width="2" />
     <TypeIdentifier>
       <HashCode>AAAAAAAACAQAAAAAAAAAEAQAAAIAAAAAAAAAAAIAAAA=</HashCode>
       <FileName>SourceCode\FileThreadController.h</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="FileThread">
-    <Position X="3.75" Y="1.75" Width="1.5" />
+    <Position X="0.75" Y="1.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>ECAQBEAAAAAgjAAAAAAAAAACAAIgAAAgAABAUAAIAAA=</HashCode>
+      <HashCode>ECAQBEAAAAAgjABAAAAAAAACAAIgAAAgAABAUAAIAAA=</HashCode>
       <FileName>SourceCode\FileThreadController.h</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="PPtController" Collapsed="true">
-    <Position X="12.25" Y="1.5" Width="1.5" />
+  <Class Name="SocketWindow">
+    <Position X="0.5" Y="9" Width="1.75" />
     <TypeIdentifier>
-      <HashCode>ECAABAIAAAhAAAEEAAICBACAAAgAAAAAEAAAQAAIAAA=</HashCode>
-      <FileName>SourceCode\PPTControl\PPtController.h</FileName>
+      <HashCode>AAAAAAAAAAAAEAAAAAAQAAAAAAAAAAAAAAAAAAQAAAg=</HashCode>
+      <FileName>SourceCode\socketwindow.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="QMainWindow" Collapsed="true">
+    <Position X="12.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AoACQgKYCA0hRAgRkKBY4oAAABEAABuBggAgIAMgACA=</HashCode>
+      <FileName>C:\Qt\Qt5.13.2\5.13.2\msvc2017_64\include\QtWidgets\qmainwindow.h</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="QObject" Collapsed="true">
@@ -84,11 +98,18 @@
       <FileName>C:\Qt\Qt5.13.2\5.13.2\msvc2017_64\include\QtCore\qobject.h</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="QMainWindow" Collapsed="true">
-    <Position X="1" Y="8.5" Width="1.5" />
+  <Class Name="QDialog" Collapsed="true">
+    <Position X="0.5" Y="7.5" Width="1.5" />
+    <NestedTypes>
+      <Enum Name="QDialog::DialogCode" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>C:\Qt\Qt5.13.2\5.13.2\msvc2017_64\include\QtWidgets\qdialog.h</NewMemberFileName>
+        </TypeIdentifier>
+      </Enum>
+    </NestedTypes>
     <TypeIdentifier>
-      <HashCode>AoACQgKYCA0hRAgRkKBY4oAAABEAABuBggAgIAMgACA=</HashCode>
-      <FileName>C:\Qt\Qt5.13.2\5.13.2\msvc2017_64\include\QtWidgets\qmainwindow.h</FileName>
+      <HashCode>BACJBAiiQBAQAAAQBABAIAAAAAAEIAAAgAERgAIgAEA=</HashCode>
+      <FileName>C:\Qt\Qt5.13.2\5.13.2\msvc2017_64\include\QtWidgets\qdialog.h</FileName>
     </TypeIdentifier>
   </Class>
   <Font Name="Microsoft YaHei UI" Size="9" />
