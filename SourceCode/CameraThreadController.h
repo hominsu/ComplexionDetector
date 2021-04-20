@@ -84,7 +84,7 @@ private:
 
     Detected detected;
     PPtController* ppt = nullptr;
-    int action;
+    int action = -1;
 
 signals:
     void noneCamera();

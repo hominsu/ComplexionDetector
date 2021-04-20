@@ -2,6 +2,7 @@
 
 #include <QtWidgets/QMainWindow>
 #include <QDir>
+#include <QIcon>
 #include <QAction>
 #include <QDateTime>
 #include <QToolButton>

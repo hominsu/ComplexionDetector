@@ -6,4 +6,7 @@
         <file>action/xuanzhuan.png</file>
         <file>action/zhuaqu.png</file>
     </qresource>
+    <qresource prefix="/WindowIcon">
+        <file>Icon/heart.png</file>
+    </qresource>
 </RCC>

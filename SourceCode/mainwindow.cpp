@@ -4,6 +4,8 @@ MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent), ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+    setWindowTitle(QString::fromLocal8Bit("手手相传"));
+    setWindowIcon(QIcon(QPixmap(":/WindowIcon/Icon/heart.png")));
     createConnect();
 }
 MainWindow::~MainWindow()
@@ -209,6 +211,15 @@ void MainWindow::onPBtnCloseCameraSlot()
         ip = "";
 
         emit stopReadCameraFrameSignal();
+
+        disconnect(cameraThread, &CameraThreadController::sendImage, this, &MainWindow::readImageSlot);
+        // 连接主窗口的录制信号和控制器的录制槽
+        disconnect(this, &MainWindow::vedioRecording, cameraThread, &CameraThreadController::statusVedioRecordingSlot);
+        disconnect(cameraThread, &CameraThreadController::cameraEnableSignal, this, &MainWindow::cameraStatusSlot);
+        disconnect(cameraThread, &CameraThreadController::noneCameraSignal, this, &MainWindow::noneCameraSlot);
+        disconnect(this, &MainWindow::stopReadCameraFrameSignal, cameraThread, &CameraThreadController::stopReadFrameSlot);
+        disconnect(this, &MainWindow::addClientActionSignals, cameraThread, &CameraThreadController::addClientActionSlot);
+
         // 关闭线程
         delete cameraThread;
 
@@ -236,7 +247,7 @@ void MainWindow::readImageSlot(const QImage image, int action)
         sendData(action);
     }
 
-    //std::cout << "action: " << action << std::endl;
+    std::cout << "action: " << action << std::endl;
 }
 
 void MainWindow::onPBtnCatchPictureSlot()
@@ -354,7 +365,7 @@ void MainWindow::readFrameSlot(const QImage frame, int action)
 
     displayAction(action);
 
-    //std::cout << "action: " << action << std::endl;
+    std::cout << "action: " << action << std::endl;
 }
 
 void MainWindow::displayAction(int action)

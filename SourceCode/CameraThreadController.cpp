@@ -66,6 +66,11 @@ CameraThreadController::~CameraThreadController()
 
 CameraThread::~CameraThread()
 {
+    if (ppt != nullptr)
+    {
+        delete ppt;
+    }
+    ppt = nullptr;
     cap.release();
 }
 
@@ -75,6 +80,7 @@ void CameraThread::statusCatchFrame(const QString fileName, const bool _isRecord
     {
         // 创建videowriter，用于写入帧
         vedioRecordingFileName = fileName.toStdString();
+        std::cout << vedioRecordingFileName << std::endl;
         vedio.open(vedioRecordingFileName,
                     cv::VideoWriter::fourcc('D', 'I', 'V', 'X'),
                     fps,
@@ -139,7 +145,6 @@ void CameraThread::startCamera()
     }
 
     detected.initalDetected();
-    /*
     if (detected.getisGpu())
     {
         std::cout << "Using GPU" << std::endl;
@@ -148,7 +153,6 @@ void CameraThread::startCamera()
     {
         std::cout << "Using CPU" << std::endl;
     }
-    */
     detected.loadingModule();
 
     // 发送打开信号
@@ -189,11 +193,13 @@ void CameraThread::readframe()
     {
         // 从摄像头中读取一帧
         cap.read(srcImage);
+
         // 如果处于录制状态就将帧压入videowriter
         if (this->isRecording)
         {
             vedio << srcImage;
         }
+
         // 进行镜像操作
         cv::flip(frameResize(srcImage), dstImage, 1);
 
